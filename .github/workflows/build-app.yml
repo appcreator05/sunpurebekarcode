@@ -14,11 +14,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '20'
+
+      - name: Install Nativefier
+        run: npm install -g nativefier
 
       - name: Build App
-        # এখানে আমরা ডাইরেক্ট npx ব্যবহার করছি যাতে লোকাল ইন্সটলেশন ঝামেলা না হয়
-        run: npx nativefier@45.0.3 "https://appcreator05.github.io/update/" --name "VDOSkyApp" --platform windows --arch x64 --electron-version 13.6.9
+        # এখানে আমরা কোনো নির্দিষ্ট ভার্সন ফিক্স করছি না, যাতে এনভায়রনমেন্টের সাথে মেলে
+        run: nativefier "https://appcreator05.github.io/update/" --name "VDOSkyApp" --platform windows --arch x64
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
