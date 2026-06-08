@@ -1,0 +1,30 @@
+name: Build Desktop App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Nativefier
+        run: npm install -g nativefier
+
+      - name: Build App
+        # Ekhane tomara URL ta change kore nio
+        run: nativefier --name "VDOSkyApp" "https://appcreator05.github.io/update/" --platform windows --arch x64
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: VDOSkyApp-Windows
+          path: VDOSkyApp-win32-x64/
