@@ -1,4 +1,31 @@
-- name: Build App
-        run: |
-          npm install -g nativefier@48.0.0
-          nativefier --name "VDOSkyApp" "https://appcreator05.github.io/update/" --platform windows --arch x64 --electron-version 13.6.9
+name: Build Desktop App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      - name: Install Nativefier
+        # পুরনো ভার্সন ইন্সটল করছি যা উইন্ডোজ ৭ সাপোর্ট করে
+        run: npm install -g nativefier@45.0.3
+
+      - name: Build App
+        # ইলেকট্রন ভার্সন ১৩ ব্যবহার করছি যা সব উইন্ডোজে চলে
+        run: nativefier --name "VDOSkyApp" "https://appcreator05.github.io/update/" --platform windows --arch x64 --electron-version 13.6.9
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: VDOSkyApp-Windows
+          path: VDOSkyApp-win32-x64/
