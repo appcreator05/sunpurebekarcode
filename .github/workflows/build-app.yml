@@ -9,10 +9,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
@@ -20,11 +20,12 @@ jobs:
         run: npm install -g nativefier
 
       - name: Build App
-        # Ekhane tomara URL ta change kore nio
         run: nativefier --name "VDOSkyApp" "https://appcreator05.github.io/update/" --platform windows --arch x64
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: VDOSkyApp-Windows
+          # Note: v4 version-e path ektu alada bhabe nite pare, 
+          # jodi error dey tobe shudhu folder-er nam dibe
           path: VDOSkyApp-win32-x64/
